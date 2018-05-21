@@ -1,8 +1,8 @@
 import Handler.*;
 import Lexer.Lexer;
-import Parser.Parser1;
 import Lexer.Token;
 import RPN.RPN;
+import Parser.Parser1;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -18,9 +18,11 @@ public class Main{
         tokens = lexer.getTokenList(input);
         Parser1 parser = new Parser1(tokens);
         parser.parse();
-        RPN rpn = new RPN();
-        for (Token token: rpn.toRPN(tokens)){
-            System.out.print(token.getValue()+" ");
+        RPN rpn = new RPN(tokens);
+        int i=0;
+        for (Token token: rpn.toRPN()){
+            System.out.print(i+" "+token.getValue()+"\n");
+            i++;
         }
         long finish = System.nanoTime();
         System.out.println("\n\n"+"Execution time = "+((finish-start)/Math.pow(10,6))+" ms");

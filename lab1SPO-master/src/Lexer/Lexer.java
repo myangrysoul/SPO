@@ -47,6 +47,8 @@ public class Lexer {
             case "SPACE":
             case "END":
             case "COMA":
+            case "R_F_B":
+            case "L_F_B":
                 tokenList.add(new Token(type, value));
                 break;
             default:
