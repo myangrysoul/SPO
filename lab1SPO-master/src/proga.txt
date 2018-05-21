@@ -4,6 +4,8 @@ while(a<2)
 {
 abc:=23+22;
 while (b<831){
+print(a,b,c,d);
+a type String;
 a:=a+23;
 }
 while (b>831){

@@ -6,6 +6,8 @@ public enum LexemType {
     CYCLE("CYCLE",Pattern.compile("^while|if"),0),
     PRINT("PRINT",Pattern.compile("^print"),0),
     DIGIT("DIGIT", Pattern.compile("^(0|[1-9][0-9]*)"),0),
+    TYPE("TYPE", Pattern.compile("^type"),1),
+    STRING("STRING",Pattern.compile("^String"),0),
     VAR("VAR", Pattern.compile("^([a-zA-Z]+[0-9]*[a-zA-Z]*)"),0),
     COMP_OP("COMP_OP",Pattern.compile("^(==|<|>)"),1),
     ASSIGN_OP("ASSIGN_OP", Pattern.compile("^(:=)"),2),

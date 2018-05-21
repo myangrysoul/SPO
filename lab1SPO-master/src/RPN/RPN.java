@@ -1,7 +1,6 @@
 package RPN;
 
-import Handler.TokenOperand;
-import Handler.TokenOperator;
+
 import Lexer.LexemType;
 import Lexer.Token;
 
@@ -19,7 +18,7 @@ public class RPN {
 
     }
 
-    public void exprHandle(){
+    private void exprHandle(){
 
 
             if(input.get(i) instanceof TokenOperand){
@@ -35,7 +34,7 @@ public class RPN {
             }
         }
 
-    public void OperatorHandle() {
+    private void OperatorHandle() {
 
         TokenOperator tokenOperator = (TokenOperator) input.get(i);
         if (tokenOperator.getType().equals("L_B")) {
@@ -55,7 +54,7 @@ public class RPN {
         }
 
     }
-    public void cycleRPN(){
+   private void cycleRPN(){
         i++;
         int JmpToStart=output.size();
         int buff;
@@ -71,25 +70,52 @@ public class RPN {
                 i++;
                 cycleRPN();
             }
+            if (input.get(i+1).getType().equals("PRINT")){
+                i++;
+                printHandle();
+            }
             i++;
             exprHandle();
         }
-        output.add(new TokenOperand("DIGIT","P"+Integer.toString(JmpToStart)));
+        output.add(new TokenOperand("DIGIT",Integer.toString(JmpToStart)));
         output.add(new TokenOperator(0,LexemType.JUMP.getType(),"!"));
-        output.set(buff,new TokenOperand("DIGIT","P"+Integer.toString(output.size())));
+        output.set(buff,new TokenOperand("DIGIT",Integer.toString(output.size())));
 
 
 
 
 
     }
+    private void printHandle(){
+    i++;
+    while(!input.get(i).getType().equals("END")){
+        if(input.get(i) instanceof TokenOperand){
+            output.add(input.get(i));
+            output.add(new TokenOperator(0,"PRINT","print"));
+        }
+        i++;
+
+    }
+    i++;
+
+
+
+
+    }
+
+
     public ArrayList<Token> toRPN() {
        for(i = 0;i<input.size(); i++){
-           if(input.get(i).getType().equals("CYCLE")){
-               cycleRPN();
-           }
-           else {
-               exprHandle();
+           switch (input.get(i).getType()) {
+               case "CYCLE":
+                   cycleRPN();
+                   break;
+               case "PRINT":
+                   printHandle();
+                   break;
+               default:
+                   exprHandle();
+                   break;
            }
 
        }

@@ -50,9 +50,17 @@ public class Parser1 {
     }
 
     private void expr() {
-        if(match("VAR")&&match("ASSIGN_OP")) {
-            assign();
-        }else if(match("CYCLE")) {
+        if(match("VAR")) {
+            if (match("ASSIGN_OP")) {
+                assign();
+            } else if(match("TYPE")){
+                type();
+            }
+            else{
+                throw new RuntimeException("Kochok1");
+            }
+        }
+        else if(match("CYCLE")) {
             cycle();
         }else if(match("PRINT")) {
             print();
@@ -60,6 +68,7 @@ public class Parser1 {
             throw new RuntimeException("LOX 1");
         }
     }
+
 
     private void assign() {
         assign_value();
@@ -155,4 +164,15 @@ public class Parser1 {
             throw new RuntimeException("LOX-4!!!");
         }
     }
-}
+    private void type(){
+        if(match("STRING")) {
+            if (!match("END")) {
+                throw new RuntimeException("KOCHOK HUI");
+            }
+        }
+        else{
+            throw new RuntimeException("Kochok hui 2");
+            }
+
+        }
+    }

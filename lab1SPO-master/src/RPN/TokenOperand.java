@@ -1,11 +1,9 @@
-package Handler;
+package RPN;
+
 
 import Lexer.Token;
 
-public class TokenOperand extends Token implements TranslationElement {
-    public void translate(Handler h){
-        h.handle(this);
-    }
+public class TokenOperand extends Token  {
     public TokenOperand(String type, String value){
         super(type,value);
     }
