@@ -7,4 +7,5 @@ public class TokenOperand extends Token  {
     public TokenOperand(String type, String value){
         super(type,value);
     }
+
 }

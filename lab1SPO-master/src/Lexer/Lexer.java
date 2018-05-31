@@ -42,9 +42,13 @@ public class Lexer {
         switch (type) {
             case "DIGIT":
             case "VAR":
+            case "STRING":
+            case "LIST":
+            case "HASHSET":
                 tokenList.add(new TokenOperand(type, value));
                 break;
             case "SPACE":
+                break;
             case "END":
             case "COMA":
             case "R_F_B":

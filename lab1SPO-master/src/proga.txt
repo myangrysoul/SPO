@@ -1,15 +1,19 @@
-while (a>0)
-{
-while(a<2)
-{
-abc:=23+22;
-while (b<831){
-print(a,b,c,d);
 a type String;
-a:=a+23;
-}
-while (b>831){
-a:=a-23;
-}
-}
-b:=a+23/(a-e*34-25);}
+f type String;
+r type String;
+l type HashSet;
+print(a);
+while(a<5){a := a+(5+3+4+5*4); f:=f+1; while(r<5){r:=r+2; print (r);} print(a,f);}
+d type String; d := 10;
+while(d>1){d := d-2;print(d);}
+d := d + 2 * a;
+print (a, a, d);
+
+l.add(8);
+l.add(9);
+l.add(10);
+l.add(11);
+l.contains(11);
+l.remove(11);
+l.contains(11);
+
