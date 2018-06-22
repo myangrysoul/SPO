@@ -34,14 +34,14 @@ public class Parser1 {
         Matcher matcher;
         StringBuilder match=new StringBuilder();
         Token current;
-            for (int i = 0; i < args; i++) {
-                current = get(i);
-                match.append(current.getType()).append(" ");
-            }
-            match.deleteCharAt(match.length() - 1);
+        for (int i = 0; i < args; i++) {
+            current = get(i);
+            match.append(current.getType()).append(" ");
+        }
+        match.deleteCharAt(match.length() - 1);
 
-            pattern = Pattern.compile(type);
-            matcher = pattern.matcher(match.toString());
+        pattern = Pattern.compile(type);
+        matcher = pattern.matcher(match.toString());
         if (matcher.matches()) {
             pos += args;
             return true;
@@ -91,7 +91,7 @@ public class Parser1 {
     private boolean value() {
         return methodget()||match("VAR|DIGIT",1);
     }
-   private boolean methodget(){
+    private boolean methodget(){
         return match("VAR GET",2) &&match("L_B",1)&&value()&&match("R_B",1);
 
     }

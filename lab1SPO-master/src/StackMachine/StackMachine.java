@@ -151,55 +151,58 @@ public class StackMachine {
         if (value.equals(".set")) {
             arg1 = Integer.parseInt(stackMachine.pop().getValue());
         }
-        Variable variable=variablesTable.get(stackMachine.peek().getValue());
-        if (variable.getList()!=null) {
-            list = variablesTable.get(stackMachine.pop().getValue()).getList();
+        String varName = stackMachine.peek().getValue();
+        Variable variable = variablesTable.get(varName);
+        try {
+            if (variable.getList() != null) {
+                list = variablesTable.get(stackMachine.pop().getValue()).getList();
+            } else if (variable.getSet() != null) {
+                set = variablesTable.get(stackMachine.pop().getValue()).getSet();
+            }
+        } catch (NullPointerException e) {
+            throw new RuntimeException("Cannot apply operation " + value + " to variable " + stackMachine.pop().getValue());
         }
-        else if(variable.getSet()!=null){
-            set=variablesTable.get(stackMachine.pop().getValue()).getSet();
-        }
-        else throw new RuntimeException("Cannot apply operation "+value+" to variable "+stackMachine.pop().getValue());
+
         switch (value) {
             case ".add":
-                try {
+                if (variable.getList() != null) {
                     list.add(arg2);
-                }
-                catch (NullPointerException e){
+                } else if (variable.getSet() != null) {
                     set.add(arg2);
                 }
                 break;
 
             case ".remove":
-                try {
+                if (variable.getList() != null) {
                     list.remove(arg2);
-                }
-                catch (NullPointerException e){
+                } else if (variable.getSet() != null) {
                     set.remove(arg2);
                 }
                 break;
             case ".contains":
-                try {
-                    System.out.println("List contains '" + arg2 + "' is: " + list.contains(arg2));
-                }
-                catch (NullPointerException e){
-                    System.out.println("HashSet contains '" + arg2 + "' is: " + set.contains(arg2));
+                if (variable.getList() != null) {
+                    System.out.println("List '" + varName + "' contains '" + arg2 + "' is: " + list.contains(arg2));
+                } else if (variable.getSet() != null) {
+                    System.out.println("HashSet '" + varName + "' contains '" + arg2 + "' is: " + set.contains(arg2));
                 }
                 break;
             case ".get":
-                try{
-                TokenOperand token = new TokenOperand("DIGIT", String.valueOf(list.get((int) arg2)));
-                stackMachine.push(token);}
-                catch (NullPointerException e){
-                    throw new NullPointerException("Cannot apply operation "+value+" to variable type HashSet");
+                if (variable.getList() != null) {
+                    TokenOperand token = new TokenOperand("DIGIT", String.valueOf(list.get((int) arg2)));
+                    stackMachine.push(token);
+                } else if (variable.getSet() != null) {
+                    throw new NullPointerException("Cannot apply operation " + value + " to variable type HashSet");
                 }
+
                 break;
 
             case ".set":
-                try{
-                list.set(arg1, arg2);}
-                 catch (NullPointerException e){
-                throw new NullPointerException("Cannot apply operation "+value+" to variable type HashSet");
-            }
+
+                if (variable.getList() != null) {
+                    list.set(arg1, arg2);
+                } else if (variable.getSet() != null) {
+                    throw new NullPointerException("Cannot apply operation " + value + " to variable type HashSet");
+                }
                 break;
             default:
                 break;
